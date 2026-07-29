@@ -32,14 +32,27 @@ export default function Hero() {
 
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
+      <div className="hero__bg-base" aria-hidden="true" />
+      <div className="hero__bg-alt" aria-hidden="true" />
+      <div className="hero__bg-overlay" aria-hidden="true" />
+      <div className="hero__ring" aria-hidden="true" />
       <div className="hero__grid" aria-hidden="true" />
           <div className="hero__ambient" aria-hidden="true">
             <i className="hero__ambient-blue" />
             <i className="hero__ambient-yellow" />
             <i className="hero__ambient-beam" />
-            {Array.from({ length: 10 }).map((_, i) => (
-              <i key={i} className="hero__particle" />
-            ))}
+          </div>
+          <div className="hero__particles" aria-hidden="true">
+            <i className="hero__particle hero__particle--1" />
+            <i className="hero__particle hero__particle--2" />
+            <i className="hero__particle hero__particle--3" />
+            <i className="hero__particle hero__particle--4" />
+            <i className="hero__particle hero__particle--5" />
+            <i className="hero__particle hero__particle--6" />
+            <i className="hero__particle hero__particle--7" />
+            <i className="hero__particle hero__particle--8" />
+            <i className="hero__particle hero__particle--9" />
+            <i className="hero__particle hero__particle--10" />
           </div>
       <div className="container hero__layout">
         <div className="hero__copy">
