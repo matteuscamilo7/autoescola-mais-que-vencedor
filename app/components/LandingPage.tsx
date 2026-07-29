@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { comboPlans, formatBRL, individualPlans, type Plan } from "../data/plans";
 const brandLogo = "/images/brand-logo.webp";
 const heroVehicles = "/images/hero-vehicles-autoescola.webp";
-const heroMicrobus = "/images/hero-microbus.webp";
+const heroMicrobus = "/images/hero-microbus-clean.webp";
 const checklistIcon = "/images/icons/checklist.webp";
 const instructorIcon = "/images/icons/instructor.webp";
 const locationIcon = "/images/icons/location.webp";
@@ -279,8 +279,8 @@ export default function LandingPage() {
                 className="hero__microbus"
                 src={heroMicrobus}
                 alt="Micro-ônibus branco de autoescola"
-                width={1536}
-                height={1024}
+                width={1316}
+                height={743}
                 fetchPriority="high"
                 decoding="async"
               />

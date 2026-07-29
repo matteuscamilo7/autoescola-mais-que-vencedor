@@ -523,9 +523,8 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .eyebrow, .hero h1 > span, .hero__lead, .hero__detail, .hero__actions, .hero__facts, .hero__visual { opacity: 1; transform: none; animation: none !important; }
   .hero__headline-highlight::after { transform: skewX(-13deg) scaleX(1); animation: none !important; }
   .hero__vehicles, .hero__microbus, .hero__ambient i, .vehicle-glow, .hero__stage-shadow, .route, .route b, .route > i, .hero__check-3d, .steps::after, .plan-card.selected .plan-card__top > span { animation: none !important; }
-  .traffic-strip__vehicle { animation: none !important; }
-  .traffic-strip__vehicle--car { left: 12%; }
-  .traffic-strip__vehicle--moto { left: 48%; }
-  .traffic-strip__vehicle--bus { left: 78%; }
+  .traffic-strip__vehicle--car { left: 0; animation: cruise-and-return 24s linear -5s infinite !important; }
+  .traffic-strip__vehicle--moto { left: 0; animation: cruise-back-and-forth 20s linear -4s infinite !important; }
+  .traffic-strip__vehicle--bus { left: 0; animation: cruise-and-return 34s linear -17s infinite !important; }
   .steps::after { left: calc(50% - 11px); }
 }
