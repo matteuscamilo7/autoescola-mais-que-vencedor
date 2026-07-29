@@ -124,7 +124,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .route strong { color: var(--ink); font: 800 11px var(--font-manrope); }
 .route > i { width: 8px; height: 8px; position: absolute; top: 10px; right: 11px; background: #16d672; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 0 rgba(22,214,114,.35); animation: gadget-status 2.4s ease-out infinite; }
 .route--top { --route-y: -6px; top: 102px; right: 42%; }
-.route--side { --route-x: 6px; right: -18px; bottom: 155px; min-width: 156px; animation-duration: 5.4s; animation-delay: -1.65s; }
+.route--side { --route-x: 6px; right: -18px; bottom: 125px; min-width: 156px; animation-duration: 5.4s; animation-delay: -1.65s; }
 .route--side b { color: var(--black); background: linear-gradient(145deg, #ffe85f, var(--yellow-2)); box-shadow: inset 0 1px rgba(255,255,255,.45), 0 8px 18px rgba(255,184,0,.25); }
 .route--bottom { --route-x: -5px; left: -10px; bottom: 62px; animation-duration: 5.1s; animation-delay: -2.35s; }
 .route--bottom b { color: #062315; background: linear-gradient(145deg, #75ffb4, #0bc663); box-shadow: inset 0 1px rgba(255,255,255,.45), 0 8px 18px rgba(11,198,99,.24); }
@@ -416,7 +416,7 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .hero__microbus { width: 32%; top: 22%; right: 2%; }
   .hero__stage { inset: 4% -7% 0; }
   .route--top { top: 90px; right: 38%; }
-  .route--side { right: -5px; bottom: 125px; }
+  .route--side { right: -5px; bottom: 95px; }
   .route--bottom { left: 0; bottom: 48px; }
   .hero__quote { min-height: 84px; }
   .trust__grid { grid-template-columns: 1fr 1fr; }
