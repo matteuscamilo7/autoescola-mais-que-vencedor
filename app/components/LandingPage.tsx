@@ -140,16 +140,21 @@ export default function LandingPage() {
   const [activeSection, setActiveSection] = useState("inicio");
 
   useEffect(() => {
+    let frame = 0;
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
-      const marker = window.scrollY + window.innerHeight * .38;
-      const current = routeItems.reduce((active, item) => {
-        const section = document.getElementById(item.id);
-        return section && section.offsetTop <= marker ? item.id : active;
-      }, "inicio");
-      setActiveSection(current);
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        setScrolled(window.scrollY > 20);
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
+        const marker = window.scrollY + window.innerHeight * .38;
+        const current = routeItems.reduce((active, item) => {
+          const section = document.getElementById(item.id);
+          return section && section.offsetTop <= marker ? item.id : active;
+        }, "inicio");
+        setActiveSection(current);
+      });
     };
     const timer = window.setTimeout(() => setHelp(true), 5000);
     onScroll();
@@ -157,6 +162,7 @@ export default function LandingPage() {
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.clearTimeout(timer);
+      window.cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -173,6 +179,15 @@ export default function LandingPage() {
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [menu]);
+
+  useEffect(() => {
+    if (!legal) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLegal(null);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [legal]);
 
   useEffect(() => {
     const revealItems = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
@@ -198,7 +213,7 @@ export default function LandingPage() {
 
     revealItems.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, []);
+  }, [category, vehicle]);
 
   const plans = category === "individual" ? individualPlans : comboPlans;
   const selectedMessage = useMemo(() => {
@@ -373,30 +388,30 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="section plans" id="planos">
+        <section className="section plans" id="planos" aria-labelledby="plans-title">
           <div className="container">
-            <header className="section-title centered"><span>Planos transparentes</span><h2>Escolha o plano ideal para você</h2><p>Selecione a categoria e veja as opções de aulas disponíveis.</p></header>
+            <header className="section-title centered" data-reveal><span>Planos transparentes</span><h2 id="plans-title">Escolha o plano ideal para você</h2><p>Selecione a categoria e veja as opções de aulas disponíveis.</p></header>
             <div className="tabs" role="tablist" aria-label="Categoria dos planos">
-              <button role="tab" aria-selected={category === "individual"} className={category === "individual" ? "active" : ""} onClick={() => changeCategory("individual")}>🚗 Carro ou Moto</button>
-              <button role="tab" aria-selected={category === "combo"} className={category === "combo" ? "active combo" : ""} onClick={() => changeCategory("combo")}>🚗 + 🏍 Carro + Moto</button>
+              <button type="button" role="tab" aria-controls="plan-results" aria-selected={category === "individual"} className={category === "individual" ? "active" : ""} onClick={() => changeCategory("individual")}>🚗 Carro ou Moto</button>
+              <button type="button" role="tab" aria-controls="plan-results" aria-selected={category === "combo"} className={category === "combo" ? "active combo" : ""} onClick={() => changeCategory("combo")}>🚗 + 🏍 Carro + Moto</button>
             </div>
             {category === "individual" && (
               <div className="vehicle-toggle">
                 <span>Quero aulas de:</span>
-                <button className={vehicle === "carro" ? "active" : ""} aria-pressed={vehicle === "carro"} onClick={() => setVehicle("carro")}>Carro</button>
-                <button className={vehicle === "moto" ? "active" : ""} aria-pressed={vehicle === "moto"} onClick={() => setVehicle("moto")}>Moto</button>
+                <button type="button" className={vehicle === "carro" ? "active" : ""} aria-pressed={vehicle === "carro"} onClick={() => setVehicle("carro")}>Carro</button>
+                <button type="button" className={vehicle === "moto" ? "active" : ""} aria-pressed={vehicle === "moto"} onClick={() => setVehicle("moto")}>Moto</button>
               </div>
             )}
             <p className="plan-note">{category === "individual" ? `Você escolheu ${vehicle}. Selecione a quantidade de aulas.` : "Cada plano inclui a quantidade indicada para carro e para moto."}</p>
-            <div className={`plan-grid ${category === "combo" ? "plan-grid--combo" : ""}`}>
+            <div id="plan-results" role="tabpanel" className={`plan-grid ${category === "combo" ? "plan-grid--combo" : ""}`}>
               {plans.map((plan) => {
                 const active = selected.lessons === plan.lessons;
                 return (
-                  <article className={`plan-card ${active ? "selected" : ""}`} key={plan.lessons}>
+                  <article className={`plan-card ${active ? "selected" : ""}`} key={plan.lessons} data-reveal>
                     <div className="plan-card__top"><span>{category === "combo" ? "🚗 + 🏍" : vehicle === "carro" ? "🚗" : "🏍"}</span>{active && <small>Selecionado</small>}</div>
                     <h3><b>{plan.lessons}</b> aulas{category === "combo" && <small> de cada categoria</small>}</h3>
                     <p>Valor total<strong>{formatBRL(plan.price)}</strong></p>
-                    <button className="button button--select" aria-pressed={active} onClick={() => choosePlan(plan)}>{active ? "Plano selecionado ✓" : "Selecionar este plano"}</button>
+                    <button type="button" className="button button--select" aria-pressed={active} onClick={() => choosePlan(plan)}>{active ? "Plano selecionado ✓" : "Selecionar este plano"}</button>
                   </article>
                 );
               })}
@@ -410,12 +425,12 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="complete">
-          <div className="container complete__card">
+        <section className="complete" aria-labelledby="complete-title">
+          <div className="container complete__card" data-reveal>
             <div className="complete__badge">12x</div>
             <div>
               <span className="kicker kicker--light">Mais praticidade</span>
-              <h2>Quer mais praticidade? Conheça o Pacotão Completo</h2>
+              <h2 id="complete-title">Quer mais praticidade? Conheça o Pacotão Completo</h2>
               <p className="complete__highlight">DUDA + exames inclusos</p>
               <ul><li>Parcelamento em até 12x no cartão de crédito</li><li>Consulte as condições diretamente com a equipe</li></ul>
               <p className="complete__note">Valores, disponibilidade e condições devem ser confirmados diretamente com a autoescola.</p>
@@ -428,12 +443,12 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="section payments">
+        <section className="section payments" aria-labelledby="payments-title">
           <div className="container">
-            <header className="section-title centered"><span>Facilidade para começar</span><h2>Escolha a forma de pagamento que melhor combina com você</h2><p>Consulte as condições de parcelamento.</p></header>
+            <header className="section-title centered" data-reveal><span>Facilidade para começar</span><h2 id="payments-title">Escolha a forma de pagamento que melhor combina com você</h2><p>Consulte as condições de parcelamento.</p></header>
             <div className="payment-grid">
               {paymentItems.map(({ image, text }) => (
-                <article key={text}>
+                <article key={text} data-reveal>
                   <b><img src={image} alt="" width={180} height={180} loading="lazy" decoding="async" /></b>
                   <span>{text}</span>
                 </article>
@@ -442,12 +457,12 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="section audience">
+        <section className="section audience" aria-labelledby="audience-title">
           <div className="container">
-            <header className="section-title"><span>Aulas no seu ritmo</span><h2>Para quem são as aulas?</h2><p>Orientação prática de acordo com seu objetivo e suas dificuldades.</p></header>
+            <header className="section-title" data-reveal><span>Aulas no seu ritmo</span><h2 id="audience-title">Para quem são as aulas?</h2><p>Orientação prática de acordo com seu objetivo e suas dificuldades.</p></header>
             <div className="feature-grid">
               {audienceItems.map(({ number, image, title, text }) => (
-                <article key={title}>
+                <article key={title} data-reveal>
                   <b>{number}</b>
                   <img src={image} alt="" width={420} height={420} loading="lazy" decoding="async" />
                   <h3>{title}</h3><p>{text}</p>
@@ -457,36 +472,36 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="section process" id="como-funciona">
+        <section className="section process" id="como-funciona" aria-labelledby="process-title">
           <div className="container">
-            <header className="section-title centered"><span>Rota simples</span><h2>Como funciona</h2><p>Da escolha do plano ao início da sua preparação.</p></header>
+            <header className="section-title centered" data-reveal><span>Rota simples</span><h2 id="process-title">Como funciona</h2><p>Da escolha do plano ao início da sua preparação.</p></header>
             <div className="steps">
               {[
                 ["1", "Escolha seu plano", "Selecione carro, moto ou ambas as categorias."],
                 ["2", "Fale com a equipe", "Entre em contato pelo WhatsApp para verificar disponibilidade."],
                 ["3", "Agende suas aulas", "Os horários são definidos conforme disponibilidade."],
                 ["4", "Comece sua preparação", "Faça suas aulas de aperfeiçoamento, reforço ou preparação prática."],
-              ].map(([n, title, text]) => <article key={title}><b>{n}</b><h3>{title}</h3><p>{text}</p></article>)}
+              ].map(([n, title, text]) => <article key={title} data-reveal><b>{n}</b><h3>{title}</h3><p>{text}</p></article>)}
             </div>
           </div>
         </section>
 
-        <section className="section about">
+        <section className="section about" aria-labelledby="about-title">
           <div className="container about__layout">
-            <div className="about__visual">
+            <div className="about__visual" data-reveal>
               <img className="about__logo" src={brandLogo} alt="Auto Escola Mais que Vencedor" width={1200} height={427} loading="lazy" decoding="async" />
               <small>Carro e moto · Queimados – RJ</small>
             </div>
-            <div className="section-title"><span>Mais que Vencedor</span><h2>Orientação profissional para você dirigir com mais segurança</h2><p>A Autoescola Mais que Vencedor oferece aulas para carro, moto ou ambas as categorias, com atendimento voltado para aperfeiçoamento, reforço e preparação para o exame prático.</p>
+            <div className="section-title" data-reveal><span>Mais que Vencedor</span><h2 id="about-title">Orientação profissional para você dirigir com mais segurança</h2><p>A Autoescola Mais que Vencedor oferece aulas para carro, moto ou ambas as categorias, com atendimento voltado para aperfeiçoamento, reforço e preparação para o exame prático.</p>
               <ul>{["Instrutores credenciados pelo DETRAN-RJ.", "Agendamento conforme disponibilidade.", "Atendimento em Queimados – RJ.", "Diferentes opções de planos.", "Formas de pagamento facilitadas."].map((item) => <li key={item}>✓ {item}</li>)}</ul>
             </div>
           </div>
         </section>
 
-        <section className="section location" id="localizacao">
+        <section className="section location" id="localizacao" aria-labelledby="location-title">
           <div className="container location__layout">
-            <div>
-              <header className="section-title"><span>Atendimento local</span><h2>Estamos em Queimados – RJ</h2><p>Próximo ao Queimados Futebol Clube.</p></header>
+            <div data-reveal>
+              <header className="section-title"><span>Atendimento local</span><h2 id="location-title">Estamos em Queimados – RJ</h2><p>Próximo ao Queimados Futebol Clube.</p></header>
               <address><b>⌖</b><span>Av. Olímpia Silva, 181<small>Queimados – RJ</small></span></address>
               <div className="location__actions">
                 <a className="button button--blue" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noreferrer" onClick={() => track("open_map")}>Abrir no Google Maps ↗</a>
@@ -494,26 +509,26 @@ export default function LandingPage() {
                 <WaButton>Falar no WhatsApp</WaButton>
               </div>
             </div>
-            <div className="map">
+            <div className="map" data-reveal>
               {mapOpen ? (
                 <iframe title="Mapa da Autoescola Mais que Vencedor em Queimados" loading="lazy" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} />
               ) : (
-                <button onClick={() => { setMapOpen(true); track("load_map"); }}><span>⌖</span><b>Mais que Vencedor</b><small>Carregar mapa interativo</small></button>
+                <button type="button" onClick={() => { setMapOpen(true); track("load_map"); }}><span>⌖</span><b>Mais que Vencedor</b><small>Carregar mapa interativo</small></button>
               )}
             </div>
           </div>
         </section>
 
-        <section className="section faq" id="duvidas">
+        <section className="section faq" id="duvidas" aria-labelledby="faq-title">
           <div className="container faq__layout">
-            <header className="section-title"><span>Dúvidas frequentes</span><h2>Informação clara antes de começar</h2><p>Não encontrou sua dúvida? Fale diretamente com nossa equipe.</p><WaButton>Falar com a equipe</WaButton></header>
-            <div>{faq.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div>
+            <header className="section-title" data-reveal><span>Dúvidas frequentes</span><h2 id="faq-title">Informação clara antes de começar</h2><p>Não encontrou sua dúvida? Fale diretamente com nossa equipe.</p><WaButton>Falar com a equipe</WaButton></header>
+            <div>{faq.map(([question, answer]) => <details key={question} data-reveal><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div>
           </div>
         </section>
 
-        <section className="final-cta">
-          <div className="container final-cta__layout">
-            <div><img className="final-cta__logo" src={brandLogo} alt="" width={1200} height={427} loading="lazy" decoding="async" /><span>Seu próximo passo começa aqui</span><h2>Dê o próximo passo com mais segurança.</h2><p>Escolha seu plano e fale agora com a equipe da Mais que Vencedor para verificar os horários disponíveis.</p></div>
+        <section className="final-cta" aria-labelledby="final-cta-title">
+          <div className="container final-cta__layout" data-reveal>
+            <div><img className="final-cta__logo" src={brandLogo} alt="" width={1200} height={427} loading="lazy" decoding="async" /><span>Seu próximo passo começa aqui</span><h2 id="final-cta-title">Dê o próximo passo com mais segurança.</h2><p>Escolha seu plano e fale agora com a equipe da Mais que Vencedor para verificar os horários disponíveis.</p></div>
             <div><WaButton className="button--large" event="whatsapp_final">Agendar minhas aulas</WaButton><small>(21) 97289-3743 · Queimados – RJ<br />Atendimento mediante agendamento.</small></div>
           </div>
         </section>
@@ -554,7 +569,7 @@ export default function LandingPage() {
       {legal && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="legal-title" onClick={() => setLegal(null)}>
           <div onClick={(event) => event.stopPropagation()}>
-            <button className="modal__close" onClick={() => setLegal(null)} aria-label="Fechar">×</button>
+            <button type="button" className="modal__close" onClick={() => setLegal(null)} aria-label="Fechar">×</button>
             <h2 id="legal-title">{legal === "privacy" ? "Política de Privacidade" : "Termos de Uso"}</h2>
             {legal === "privacy" ? (
               <p>Este site direciona o atendimento para o WhatsApp. Não coletamos dados por formulários nesta página. Ao iniciar o contato, o tratamento das informações fornecidas ocorre no canal escolhido por você.</p>
