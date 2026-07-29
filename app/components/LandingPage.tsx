@@ -232,12 +232,17 @@ export default function LandingPage() {
       <div className={`menu-overlay ${menu ? "is-open" : ""}`} aria-hidden="true" onClick={() => setMenu(false)} />
 
       <main>
-        <section className="hero" id="inicio">
+        <section className="hero" id="inicio" aria-labelledby="hero-title">
           <div className="hero__grid" aria-hidden="true" />
+          <div className="hero__ambient" aria-hidden="true">
+            <i className="hero__ambient-blue" />
+            <i className="hero__ambient-yellow" />
+            <i className="hero__ambient-beam" />
+          </div>
           <div className="container hero__layout">
             <div className="hero__copy">
               <span className="eyebrow"><i /> Instrutores credenciados pelo DETRAN-RJ</span>
-              <h1>
+              <h1 id="hero-title">
                 <span className="hero__headline-highlight">Prepare-se</span>
                 <span className="hero__headline-line">para <i>dirigir</i> com</span>
                 <span className="hero__headline-finish">
@@ -254,8 +259,8 @@ export default function LandingPage() {
                 <span>reforço ou preparação para o exame prático.</span>
               </p>
               <div className="hero__actions">
-                <WaButton className="button--large" event="whatsapp_hero">Agendar pelo WhatsApp</WaButton>
-                <a className="button button--ghost button--large" href="#planos" onClick={() => track("view_plans")}>Ver planos e valores ↓</a>
+                <WaButton className="button--large hero__primary" event="whatsapp_hero">Agendar pelo WhatsApp</WaButton>
+                <a className="button button--ghost button--large hero__secondary" href="#planos" onClick={() => track("view_plans")}>Ver planos e valores <span aria-hidden="true">↓</span></a>
               </div>
               <ul className="hero__facts">
                 <li><b>✓</b> Carro e moto</li>
@@ -264,8 +269,12 @@ export default function LandingPage() {
               </ul>
             </div>
             <div className="hero__visual">
-              <span className="route route--top"><b>⌖</b><small>Seu destino<strong>Mais confiança</strong></small><i aria-hidden="true" /></span>
-              <div className="vehicle-glow" aria-hidden="true" />
+              <div className="hero__stage" aria-hidden="true">
+                <div className="hero__road-orbit"><i /><i /><i /></div>
+                <div className="vehicle-glow" />
+                <div className="hero__stage-shadow" />
+              </div>
+              <span className="route route--top" aria-hidden="true"><b>⌖</b><small>Seu destino<strong>Mais confiança</strong></small><i /></span>
               <img
                 src={heroVehicles}
                 alt="Carro branco de autoescola e moto preta para aulas práticas"
@@ -274,11 +283,16 @@ export default function LandingPage() {
                 fetchPriority="high"
                 decoding="async"
               />
-              <span className="route route--side"><b>↗</b><small>Aulas práticas<strong>Carro + Moto</strong></small><i aria-hidden="true" /></span>
-              <span className="route route--bottom"><b>✓</b><small>Pronto para começar?<strong>Escolha seu plano</strong></small><i aria-hidden="true" /></span>
+              <span className="route route--side" aria-hidden="true"><b>↗</b><small>Aulas práticas<strong>Carro + Moto</strong></small><i /></span>
+              <span className="route route--bottom" aria-hidden="true"><b>✓</b><small>Pronto para começar?<strong>Escolha seu plano</strong></small><i /></span>
+              <span className="hero__category-seal" aria-hidden="true"><b>A+B</b><small>carro<br />e moto</small></span>
             </div>
           </div>
-          <div className="container hero__quote"><b>“</b><p>Ensinar, proteger e guiar para a vida. Esse é o seu maior superpoder!</p></div>
+          <div className="container hero__quote">
+            <span className="hero__quote-icon" aria-hidden="true"><b>“</b></span>
+            <p>Ensinar, proteger e guiar para a vida. Esse é o seu maior superpoder!</p>
+            <a href="#beneficios">Conheça os benefícios <span aria-hidden="true">↓</span></a>
+          </div>
         </section>
 
         <div className="traffic-strip" aria-hidden="true">
