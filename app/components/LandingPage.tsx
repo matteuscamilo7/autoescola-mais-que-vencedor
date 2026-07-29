@@ -237,9 +237,22 @@ export default function LandingPage() {
           <div className="container hero__layout">
             <div className="hero__copy">
               <span className="eyebrow"><i /> Instrutores credenciados pelo DETRAN-RJ</span>
-              <h1>Prepare-se para dirigir com <em>segurança e confiança.</em></h1>
-              <p className="hero__lead">Aulas práticas de carro, moto ou ambas as categorias, com atendimento em Queimados – RJ.</p>
-              <p className="hero__detail">Escolha seu plano e conte com orientação profissional para aperfeiçoamento, reforço ou preparação para o exame prático.</p>
+              <h1>
+                <span className="hero__headline-highlight">Prepare-se</span>
+                <span className="hero__headline-line">para <i>dirigir</i> com</span>
+                <span className="hero__headline-finish">
+                  <em>segurança e confiança.</em>
+                  <b className="hero__check-3d" aria-hidden="true">✓</b>
+                </span>
+              </h1>
+              <p className="hero__lead">
+                <span>Aulas práticas de carro, moto ou ambas as categorias,</span>
+                <span>com atendimento em Queimados – RJ.</span>
+              </p>
+              <p className="hero__detail">
+                <span>Escolha seu plano e conte com orientação profissional para aperfeiçoamento,</span>
+                <span>reforço ou preparação para o exame prático.</span>
+              </p>
               <div className="hero__actions">
                 <WaButton className="button--large" event="whatsapp_hero">Agendar pelo WhatsApp</WaButton>
                 <a className="button button--ghost button--large" href="#planos" onClick={() => track("view_plans")}>Ver planos e valores ↓</a>
