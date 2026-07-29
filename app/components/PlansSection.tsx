@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import WaButton from "./WaButton";
 import { individualPlans, comboPlans, formatBRL, type Plan } from "../data/plans";
 
@@ -13,6 +13,8 @@ function track(event: string, data: Record<string, unknown> = {}) {
   win.dataLayer = win.dataLayer || [];
   win.dataLayer.push({ event, ...data });
 }
+
+const vehicleIcons = { carro: "🚗", moto: "🏍" } as const;
 
 export default function PlansSection({
   category,
@@ -29,6 +31,7 @@ export default function PlansSection({
   selected: Plan;
   setSelected: (v: Plan) => void;
 }) {
+  const gridRef = useRef<HTMLDivElement>(null);
   const plans = category === "individual" ? individualPlans : comboPlans;
 
   const selectedMessage = useMemo(() => {
@@ -50,100 +53,145 @@ export default function PlansSection({
   };
 
   return (
-    <section className="section plans" id="planos" aria-labelledby="plans-title">
+    <section className="plans" id="planos" aria-labelledby="plans-title">
+      <div className="plans__bg" aria-hidden="true" />
+      <div className="plans__bar" aria-hidden="true" />
       <div className="container">
-        <header className="section-title centered" data-reveal>
-          <span>Planos transparentes</span>
+        <header className="plans__header" data-reveal>
+          <span className="plans__kicker">Planos transparentes</span>
           <h2 id="plans-title">Escolha o plano ideal para você</h2>
           <p>Selecione a categoria e veja as opções de aulas disponíveis.</p>
         </header>
 
-        <div className="tabs" role="tablist" aria-label="Categoria dos planos">
-          <button
-            type="button" role="tab" aria-controls="plan-results"
-            aria-selected={category === "individual"}
-            className={category === "individual" ? "active" : ""}
-            onClick={() => changeCategory("individual")}
-          >🚗 Carro ou Moto</button>
-          <button
-            type="button" role="tab" aria-controls="plan-results"
-            aria-selected={category === "combo"}
-            className={category === "combo" ? "active combo" : ""}
-            onClick={() => changeCategory("combo")}
-          >🚗 + 🏍 Carro + Moto</button>
+        <div className="plans__controls">
+          <div className="plans__tabs" role="tablist" aria-label="Categoria dos planos">
+            <button
+              type="button" role="tab" aria-controls="plan-results"
+              aria-selected={category === "individual"}
+              className={`plans__tab${category === "individual" ? " plans__tab--active" : ""}`}
+              onClick={() => changeCategory("individual")}
+            >
+              <span className="plans__tab-icon">🚗</span>
+              <span className="plans__tab-label">Carro ou Moto</span>
+            </button>
+            <button
+              type="button" role="tab" aria-controls="plan-results"
+              aria-selected={category === "combo"}
+              className={`plans__tab plans__tab--combo${category === "combo" ? " plans__tab--active" : ""}`}
+              onClick={() => changeCategory("combo")}
+            >
+              <span className="plans__tab-icon plans__tab-icon--combo">🚗🏍</span>
+              <span className="plans__tab-label">Carro + Moto</span>
+            </button>
+            <span className="plans__tab-slider" aria-hidden="true" style={{
+              translate: category === "individual" ? "0 0" : "100% 0",
+            }} />
+          </div>
+
+          {category === "individual" && (
+            <div className="plans__toggle">
+              <span className="plans__toggle-label">Quero aulas de:</span>
+              <div className="plans__toggle-group">
+                <button
+                  type="button"
+                  className={`plans__toggle-btn${vehicle === "carro" ? " plans__toggle-btn--active" : ""}`}
+                  aria-pressed={vehicle === "carro"}
+                  onClick={() => setVehicle("carro")}
+                >
+                  <span className="plans__toggle-icon">🚗</span>
+                  Carro
+                </button>
+                <button
+                  type="button"
+                  className={`plans__toggle-btn${vehicle === "moto" ? " plans__toggle-btn--active" : ""}`}
+                  aria-pressed={vehicle === "moto"}
+                  onClick={() => setVehicle("moto")}
+                >
+                  <span className="plans__toggle-icon">🏍</span>
+                  Moto
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
-        {category === "individual" && (
-          <div className="vehicle-toggle">
-            <span>Quero aulas de:</span>
-            <button
-              type="button"
-              className={vehicle === "carro" ? "active" : ""}
-              aria-pressed={vehicle === "carro"}
-              onClick={() => setVehicle("carro")}
-            >Carro</button>
-            <button
-              type="button"
-              className={vehicle === "moto" ? "active" : ""}
-              aria-pressed={vehicle === "moto"}
-              onClick={() => setVehicle("moto")}
-            >Moto</button>
-          </div>
-        )}
-
-        <p className="plan-note">
+        <p className="plans__note">
           {category === "individual"
             ? `Você escolheu ${vehicle}. Selecione a quantidade de aulas.`
             : "Cada plano inclui a quantidade indicada para carro e para moto."}
         </p>
 
-        <div id="plan-results" role="tabpanel" className={`plan-grid ${category === "combo" ? "plan-grid--combo" : ""}`}>
-          {plans.map((plan, idx) => {
+        <div id="plan-results" ref={gridRef} role="tabpanel" className={`plans__grid${category === "combo" ? " plans__grid--combo" : ""}`}>
+          {plans.map((plan) => {
             const active = selected.lessons === plan.lessons;
-            const isPopular = plan.lessons === (category === "combo" ? 10 : 10);
+            const isPopular = plan.lessons === 10;
             return (
-              <article className={`plan-card ${active ? "selected" : ""}`} key={plan.lessons} data-reveal>
-                {isPopular && !active && <span className="plan-card__badge">⭐ Mais popular</span>}
-                {active && <span className="plan-card__badge" style={{background: "linear-gradient(135deg, #087bff, #2cb7ff)"}}>✓ Selecionado</span>}
-                <div className="plan-card__head">
-                  <div className="plan-card__icon">{category === "combo" ? "🚗🏍" : vehicle === "carro" ? "🚗" : "🏍"}</div>
-                  <h3>
-                    <b>{plan.lessons}</b> aulas
-                    {category === "combo" && <small>de cada categoria</small>}
-                  </h3>
+              <article
+                className={`plans__card${active ? " plans__card--selected" : ""}`}
+                key={plan.lessons}
+                data-reveal
+              >
+                {isPopular && !active && <span className="plans__card-badge">⭐ Mais popular</span>}
+                {active && <span className="plans__card-badge plans__card-badge--selected">✓ Selecionado</span>}
+
+                <div className="plans__card-head">
+                  <span className="plans__card-icon">
+                    {category === "combo" ? "🚗🏍" : vehicleIcons[vehicle]}
+                  </span>
+                  <div className="plans__card-meta">
+                    <strong className="plans__card-lessons">
+                      <span className="plans__card-number">{plan.lessons}</span> aulas
+                    </strong>
+                    {category === "combo" && <span className="plans__card-sub">de cada categoria</span>}
+                  </div>
                 </div>
-                <div className="plan-card__body">
-                  <div className="plan-card__price">
-                    <small>Valor total</small>
-                    <strong>{formatBRL(plan.price)}</strong>
+
+                <div className="plans__card-body">
+                  <div className="plans__card-price">
+                    <span className="plans__card-price-label">Valor total</span>
+                    <strong className="plans__card-price-value">{formatBRL(plan.price)}</strong>
                   </div>
                   <button
                     type="button"
-                    className="button button--select"
+                    className="plans__card-btn"
                     aria-pressed={active}
                     onClick={() => choosePlan(plan)}
-                  >{active ? "Plano selecionado ✓" : "Selecionar este plano"}</button>
+                  >
+                    <span>{active ? "Plano selecionado" : "Selecionar"}</span>
+                    <span className="plans__card-btn-arrow" aria-hidden="true">
+                      {active ? "✓" : "→"}
+                    </span>
+                  </button>
                 </div>
               </article>
             );
           })}
         </div>
 
-        <div className="warning">
-          <b>!</b>
+        <div className="plans__warning">
+          <span className="plans__warning-icon">!</span>
           <p><strong>Importante:</strong> os valores acima não incluem DUDA e taxas de exames.</p>
         </div>
 
-        <div className="summary" aria-live="polite">
-          <div>
-            <small>Seu plano</small>
-            <strong>{category === "combo" ? "Carro + Moto" : vehicle === "carro" ? "Carro" : "Moto"} · {selected.lessons} aulas{category === "combo" ? " de cada" : ""}</strong>
+        <div className="plans__summary" aria-live="polite">
+          <div className="plans__summary-glow" aria-hidden="true" />
+          <div className="plans__summary-body">
+            <div className="plans__summary-info">
+              <span className="plans__summary-label">Seu plano</span>
+              <strong className="plans__summary-value">
+                {category === "combo" ? "Carro + Moto" : vehicle === "carro" ? "Carro" : "Moto"}
+                <span className="plans__summary-dot">·</span>
+                {selected.lessons} aulas{category === "combo" ? " de cada" : ""}
+              </strong>
+            </div>
+            <div className="plans__summary-info">
+              <span className="plans__summary-label">Valor total</span>
+              <strong className="plans__summary-value plans__summary-value--price">{formatBRL(selected.price)}</strong>
+            </div>
+            <WaButton message={selectedMessage} event="whatsapp_selected_plan" className="plans__summary-btn">
+              Quero este plano
+            </WaButton>
           </div>
-          <div>
-            <small>Valor total</small>
-            <strong>{formatBRL(selected.price)}</strong>
-          </div>
-          <WaButton message={selectedMessage} event="whatsapp_selected_plan" className="button--large">Quero este plano</WaButton>
         </div>
       </div>
     </section>
