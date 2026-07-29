@@ -105,24 +105,25 @@ export default function PlansSection({
               <article className={`plan-card ${active ? "selected" : ""}`} key={plan.lessons} data-reveal>
                 {isPopular && !active && <span className="plan-card__badge">⭐ Mais popular</span>}
                 {active && <span className="plan-card__badge" style={{background: "linear-gradient(135deg, #087bff, #2cb7ff)"}}>✓ Selecionado</span>}
-                <div className="plan-card__icon">{category === "combo" ? "🚗🏍" : vehicle === "carro" ? "🚗" : "🏍"}</div>
-                <div className="plan-card__top">
+                <div className="plan-card__head">
+                  <div className="plan-card__icon">{category === "combo" ? "🚗🏍" : vehicle === "carro" ? "🚗" : "🏍"}</div>
                   <h3>
                     <b>{plan.lessons}</b> aulas
-                    {category === "combo" && <small> de cada categoria</small>}
+                    {category === "combo" && <small>de cada categoria</small>}
                   </h3>
-                  {active && <small>Selecionado</small>}
                 </div>
-                <div className="plan-card__price">
-                  <small>Valor total</small>
-                  <strong>{formatBRL(plan.price)}</strong>
+                <div className="plan-card__body">
+                  <div className="plan-card__price">
+                    <small>Valor total</small>
+                    <strong>{formatBRL(plan.price)}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    className="button button--select"
+                    aria-pressed={active}
+                    onClick={() => choosePlan(plan)}
+                  >{active ? "Plano selecionado ✓" : "Selecionar este plano"}</button>
                 </div>
-                <button
-                  type="button"
-                  className="button button--select"
-                  aria-pressed={active}
-                  onClick={() => choosePlan(plan)}
-                >{active ? "Plano selecionado ✓" : "Selecionar este plano"}</button>
               </article>
             );
           })}
