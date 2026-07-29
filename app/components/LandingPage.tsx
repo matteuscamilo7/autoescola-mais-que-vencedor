@@ -491,6 +491,7 @@ export default function LandingPage() {
           <div className="container">
             <header className="section-title centered" data-reveal><span>Rota simples</span><h2 id="process-title">Como funciona</h2><p>Da escolha do plano ao início da sua preparação.</p></header>
             <div className="steps">
+              <span className="steps__vehicle" aria-hidden="true">🚗</span>
               {[
                 ["1", "Escolha seu plano", "Selecione carro, moto ou ambas as categorias."],
                 ["2", "Fale com a equipe", "Entre em contato pelo WhatsApp para verificar disponibilidade."],
