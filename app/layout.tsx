@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: "Mais que Vencedor em Queimados – RJ", description: "Aulas práticas de carro e moto." },
   keywords: ["autoescola em Queimados", "aulas de direção em Queimados", "aulas de carro", "aulas de moto", "reforço exame prático"],
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
   other: { "codex-preview": "development" },
 };
 
