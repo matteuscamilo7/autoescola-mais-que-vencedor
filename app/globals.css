@@ -286,7 +286,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .process { background: var(--soft); }
 .steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .steps::before { content: ""; position: absolute; top: 29px; left: 11%; right: 11%; height: 3px; background: linear-gradient(90deg, var(--blue), var(--yellow)); box-shadow: 0 0 14px rgba(8,123,255,.25); }
-.steps::after { content: "🚗"; position: absolute; z-index: 3; top: 6px; left: calc(11% - 11px); font-size: 22px; filter: drop-shadow(0 5px 5px rgba(3,29,74,.2)); animation: route-trip 8s ease-in-out infinite; }
+.steps::after { content: "🚗"; position: absolute; z-index: 3; top: 6px; left: calc(12.5% - 11px); font-size: 22px; filter: drop-shadow(0 5px 5px rgba(3,29,74,.2)); animation: route-trip 11s cubic-bezier(.45,0,.25,1) infinite; will-change: left, transform, opacity; }
 .steps article { position: relative; z-index: 1; padding: 0 6px; text-align: center; }
 .steps article > b { width: 58px; height: 58px; margin: 0 auto 20px; display: grid; place-items: center; color: #fff; background: var(--blue); border: 7px solid var(--soft); border-radius: 50%; box-shadow: 0 0 0 1px #bfd5ee; }
 .steps article:last-child > b { color: var(--black); background: var(--yellow); box-shadow: var(--neon-yellow); }
@@ -434,7 +434,18 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   from { transform: translate3d(calc(100vw + 120px),0,0); }
   to { transform: translate3d(-120px,0,0); }
 }
-@keyframes route-trip { 0%,10% { left: calc(11% - 11px); transform: translateY(0); } 46%,54% { transform: translateY(-4px); } 90%,100% { left: calc(89% - 11px); transform: translateY(0); } }
+@keyframes route-trip {
+  0%, 8% { left: calc(12.5% - 11px); opacity: 1; transform: translateY(0) rotate(0deg); }
+  18% { left: calc(37.5% - 11px); transform: translateY(-5px) rotate(-3deg); }
+  25% { left: calc(37.5% - 11px); transform: translateY(0) rotate(0deg); }
+  40% { left: calc(62.5% - 11px); transform: translateY(-5px) rotate(-3deg); }
+  48% { left: calc(62.5% - 11px); transform: translateY(0) rotate(0deg); }
+  64% { left: calc(87.5% - 11px); transform: translateY(-5px) rotate(-3deg); }
+  74% { left: calc(87.5% - 11px); opacity: 1; transform: translateY(0) rotate(0deg); }
+  76% { left: calc(87.5% - 11px); opacity: 0; }
+  77% { left: calc(12.5% - 11px); opacity: 0; }
+  84%, 100% { left: calc(12.5% - 11px); opacity: 1; transform: translateY(0) rotate(0deg); }
+}
 @keyframes vehicle-idle { 0%,100% { transform: translateX(0) rotate(0); } 45% { transform: translateX(5px) rotate(-2deg); } 60% { transform: translateX(5px) rotate(1deg); } }
 
 @media (max-width: 1080px) {
