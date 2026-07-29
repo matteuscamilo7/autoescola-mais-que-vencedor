@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { comboPlans, formatBRL, individualPlans, type Plan } from "../data/plans";
 const brandLogo = "/images/brand-logo.webp";
 const heroVehicles = "/images/hero-vehicles-autoescola.webp";
+const heroMicrobus = "/images/hero-microbus-selected.webp";
 const checklistIcon = "/images/icons/checklist.webp";
 const instructorIcon = "/images/icons/instructor.webp";
 const locationIcon = "/images/icons/location.webp";
@@ -274,8 +275,18 @@ export default function LandingPage() {
                 <div className="vehicle-glow" />
                 <div className="hero__stage-shadow" />
               </div>
+              <img
+                className="hero__microbus"
+                src={heroMicrobus}
+                alt="Micro-ônibus branco de autoescola"
+                width={630}
+                height={380}
+                fetchPriority="high"
+                decoding="async"
+              />
               <span className="route route--top" aria-hidden="true"><b>⌖</b><small>Seu destino<strong>Mais confiança</strong></small><i /></span>
               <img
+                className="hero__vehicles"
                 src={heroVehicles}
                 alt="Carro branco de autoescola e moto preta para aulas práticas"
                 width={1774}
@@ -285,7 +296,6 @@ export default function LandingPage() {
               />
               <span className="route route--side" aria-hidden="true"><b>↗</b><small>Aulas práticas<strong>Carro + Moto</strong></small><i /></span>
               <span className="route route--bottom" aria-hidden="true"><b>✓</b><small>Pronto para começar?<strong>Escolha seu plano</strong></small><i /></span>
-              <span className="hero__category-seal" aria-hidden="true"><b>A+B</b><small>carro<br />e moto</small></span>
             </div>
           </div>
           <div className="container hero__quote">
