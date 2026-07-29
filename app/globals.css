@@ -146,20 +146,20 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .traffic-strip__vehicle--moto { top: 0; font-size: 27px; animation: cruise-back-and-forth 20s linear -4s infinite; }
 .traffic-strip__vehicle--bus { top: -2px; font-size: 30px; animation: cruise-and-return 34s linear -17s infinite; }
 
-.trust { position: relative; overflow: hidden; isolation: isolate; padding: 40px 0 30px; background: linear-gradient(180deg, #edf5fd 0, #f8fbff 44%, #fff 100%); border-bottom: 1px solid #e7edf4; }
-.trust::before { content: ""; position: absolute; z-index: -2; width: 500px; height: 150px; top: -94px; left: 50%; border: 1px solid rgba(8,123,255,.11); border-radius: 50%; box-shadow: 0 0 0 18px rgba(8,123,255,.018), 0 0 44px rgba(8,123,255,.08); transform: translateX(-50%) rotate(-5deg); }
-.trust::after { content: ""; position: absolute; z-index: -1; inset: 39% 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,212,0,.42) 41%, rgba(44,183,255,.36) 55%, transparent); box-shadow: 0 0 10px rgba(44,183,255,.1); }
-.trust__glow { position: absolute; z-index: -2; width: 300px; height: 170px; top: -80px; right: -86px; background: radial-gradient(ellipse, rgba(8,123,255,.15), transparent 68%); filter: blur(8px); pointer-events: none; }
+.trust { position: relative; overflow: hidden; isolation: isolate; padding: 34px 0 30px; background: #fff; border-bottom: 1px solid #e7edf4; }
+.trust::before { content: ""; position: absolute; z-index: -2; width: 500px; height: 150px; top: -102px; left: 50%; border: 1px solid rgba(8,123,255,.08); border-radius: 50%; box-shadow: 0 0 0 18px rgba(8,123,255,.012); transform: translateX(-50%) rotate(-5deg); }
+.trust::after { content: ""; position: absolute; z-index: -1; inset: 37% 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,212,0,.28) 41%, rgba(44,183,255,.22) 55%, transparent); }
+.trust__glow { position: absolute; z-index: -2; width: 260px; height: 150px; top: -94px; right: -86px; background: radial-gradient(ellipse, rgba(8,123,255,.08), transparent 68%); filter: blur(8px); pointer-events: none; }
 .trust__inner { position: relative; }
-.trust__header { min-height: 92px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 18px; color: var(--navy); }
-.trust__header > div:first-child { max-width: 760px; }
+.trust__header { min-height: 78px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 18px; padding: 0 0 15px; color: var(--navy); }
+.trust__header > div:first-child { max-width: 650px; }
 .trust__kicker { display: inline-flex; align-items: center; gap: 6px; color: var(--blue); font-size: 8px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
 .trust__kicker i { width: 11px; height: 2px; background: linear-gradient(90deg, var(--yellow), var(--sky)); border-radius: 99px; box-shadow: 0 0 7px rgba(8,123,255,.18); }
-.trust__header h2 { max-width: 760px; margin: 5px 0 5px; font: 800 clamp(27px, 3vw, 37px)/1.08 var(--font-manrope), sans-serif; letter-spacing: -.05em; }
+.trust__header h2 { max-width: 650px; margin: 4px 0 4px; font: 800 clamp(25px, 2.55vw, 31px)/1.12 var(--font-manrope), sans-serif; letter-spacing: -.045em; }
 .trust__header h2 mark { color: var(--blue); background: none; text-shadow: none; }
-.trust__header p { max-width: 600px; margin: 0; color: var(--muted); font-size: 11px; }
-.trust__counter { min-width: 110px; padding: 6px 8px; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.84); border: 1px solid rgba(8,123,255,.15); border-radius: 10px; box-shadow: 0 8px 18px rgba(3,29,74,.08), inset 0 1px #fff; backdrop-filter: blur(12px); }
-.trust__counter strong { color: var(--blue); font: 900 27px/.9 var(--font-manrope); letter-spacing: -.08em; text-shadow: none; }
+.trust__header p { max-width: 555px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.trust__counter { min-width: 102px; padding: 6px 8px; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(8,123,255,.13); border-radius: 10px; box-shadow: 0 7px 16px rgba(3,29,74,.065), inset 0 1px #fff; }
+.trust__counter strong { color: var(--blue); font: 900 25px/.9 var(--font-manrope); letter-spacing: -.08em; text-shadow: none; }
 .trust__counter span { color: var(--muted); font-size: 7px; font-weight: 800; line-height: 1.3; letter-spacing: .055em; text-transform: uppercase; }
 .trust__grid { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .trust__grid::before { content: ""; position: absolute; z-index: -1; top: 24px; left: 10%; right: 10%; height: 1px; background: repeating-linear-gradient(90deg, rgba(8,123,255,.13) 0 12px, transparent 12px 26px); }
@@ -450,9 +450,9 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .route--side { right: -5px; bottom: 95px; }
   .route--bottom { left: 0; bottom: 48px; }
   .hero__quote { min-height: 84px; }
-  .trust { padding: 40px 0 40px; background: linear-gradient(180deg, #edf5fd 0, #f8fbff 44%, #fff 100%); }
-  .trust::after { top: 39%; }
-  .trust__header { min-height: 104px; }
+  .trust { padding: 34px 0 36px; background: #fff; }
+  .trust::after { top: 37%; }
+  .trust__header { min-height: 82px; }
   .trust__grid { grid-template-columns: 1fr 1fr; }
   .benefit-card { min-height: 142px; }
   .complete__card { grid-template-columns: 1fr; }
@@ -509,12 +509,12 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .traffic-strip__vehicle--car { font-size: 24px; }
   .traffic-strip__vehicle--moto { font-size: 23px; }
   .traffic-strip__vehicle--bus { font-size: 25px; }
-  .trust { padding: 34px 0 36px; background: linear-gradient(180deg, #edf5fd 0, #f8fbff 44%, #fff 100%); }
+  .trust { padding: 30px 0 34px; background: #fff; }
   .trust::before { width: 470px; height: 170px; top: -95px; }
-  .trust::after { top: 38%; }
+  .trust::after { top: 35%; }
   .trust__glow { width: 360px; height: 250px; right: -170px; }
-  .trust__header { min-height: 150px; grid-template-columns: 1fr; align-content: start; gap: 8px; }
-  .trust__header h2 { margin-top: 6px; font-size: clamp(27px, 8vw, 35px); }
+  .trust__header { min-height: 132px; grid-template-columns: 1fr; align-content: start; gap: 7px; padding-bottom: 13px; }
+  .trust__header h2 { margin-top: 5px; font-size: clamp(25px, 7.3vw, 31px); }
   .trust__header p { font-size: 11px; }
   .trust__counter { min-width: 0; width: fit-content; padding: 6px 8px; border-radius: 10px; }
   .trust__counter strong { font-size: 26px; }
