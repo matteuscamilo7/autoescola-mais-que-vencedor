@@ -75,9 +75,9 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .hero__headline-highlight { position: relative; z-index: 1; color: var(--yellow); text-shadow: 0 0 34px rgba(255,212,0,.3); }
 .hero__headline-highlight::after { content: ""; position: absolute; z-index: -1; left: -3px; right: -8px; bottom: 2px; height: 12px; background: linear-gradient(90deg, rgba(8,123,255,.82), rgba(8,123,255,0)); border-radius: 999px; transform: skewX(-13deg); }
 .hero__headline-line i { margin-inline: .15em; color: #fff; font-style: italic; font-weight: 650; text-shadow: 0 0 24px rgba(44,183,255,.24); }
-.hero__headline-finish { margin-top: 5px; font-size: .78em; letter-spacing: -.045em; white-space: nowrap; }
+.hero__headline-finish { margin-top: 6px; font-size: .68em; letter-spacing: -.04em; white-space: nowrap; }
 .hero__headline-finish em { color: var(--yellow); font-style: normal; text-shadow: 0 0 30px rgba(255,212,0,.18); }
-.hero__check-3d { flex: 0 0 46px; width: 46px; height: 46px; margin-left: 13px; display: inline-grid; place-items: center; color: #07101d; background: linear-gradient(145deg, #fff8b5 0%, var(--yellow) 48%, #ffad00 100%); border: 2px solid rgba(255,255,255,.76); border-radius: 15px; box-shadow: inset 3px 3px 5px rgba(255,255,255,.72), inset -5px -6px 8px rgba(175,105,0,.34), 0 10px 0 #a96c00, 0 15px 24px rgba(0,0,0,.4), 0 0 26px rgba(255,212,0,.32); font-size: 25px; line-height: 1; transform: rotate(-7deg) translateY(-5px); animation: check-3d-float 3.2s ease-in-out infinite; }
+.hero__check-3d { flex: 0 0 46px; width: 46px; height: 46px; margin-left: 13px; display: inline-grid; place-items: center; color: #fff; background: linear-gradient(145deg, #67f7a7 0%, #0fc866 48%, #079447 100%); border: 2px solid rgba(225,255,239,.9); border-radius: 15px; box-shadow: inset 3px 3px 5px rgba(255,255,255,.55), inset -5px -6px 8px rgba(0,90,43,.34), 0 10px 0 #056b36, 0 15px 24px rgba(0,0,0,.4), 0 0 28px rgba(15,200,102,.48); font-size: 25px; line-height: 1; transform: rotate(-7deg) translateY(-5px); animation: check-3d-float 2.6s cubic-bezier(.45,0,.25,1) infinite; }
 .hero__lead { max-width: 625px; margin: 0; color: #e5eef9; font-size: clamp(18px, 2vw, 22px); }
 .hero__lead span, .hero__detail span { display: block; }
 .hero__detail { max-width: 590px; margin: 12px 0 0; color: #adbed1; font-size: 14px; line-height: 1.75; }
@@ -281,7 +281,11 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
 
 @keyframes shine { 0%,68% { transform: translateX(-140%); } 90%,100% { transform: translateX(140%); } }
 @keyframes vehicle-float { 0%,100% { transform: translateY(0) rotate(-.15deg); } 50% { transform: translateY(-8px) rotate(.15deg); } }
-@keyframes check-3d-float { 0%,100% { transform: rotate(-7deg) translateY(-5px); } 50% { transform: rotate(-3deg) translateY(-11px); } }
+@keyframes check-3d-float {
+  0%,100% { transform: rotate(-7deg) translateY(-5px) scale(1); filter: brightness(1); }
+  42% { transform: rotate(-2deg) translateY(-12px) scale(1.08); filter: brightness(1.12); }
+  58% { transform: rotate(-5deg) translateY(-8px) scale(.98); filter: brightness(1); }
+}
 @keyframes gadget-float-y { 0%,100% { margin-top: 0; } 50% { margin-top: -14px; } }
 @keyframes gadget-float-diagonal { 0%,100% { margin-top: 0; margin-right: 0; } 50% { margin-top: -11px; margin-right: 8px; } }
 @keyframes gadget-icon { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
