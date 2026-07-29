@@ -275,7 +275,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .plans__toggle-icon { font-size: 15px; line-height: 1; }
 .plans__note { margin: 0 0 clamp(24px, 2.8vw, 34px); color: #889ab0; text-align: center; font-size: 13px; }
 .plans__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-.plans__card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #e7ecf3; border-radius: 18px; box-shadow: 0 2px 8px rgba(3,29,74,.02); transition: transform .4s cubic-bezier(.22,.72,.32,1), border-color .4s ease, box-shadow .4s ease; overflow: hidden; }
+.plans__card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #e7ecf3; border-radius: 18px; box-shadow: 0 2px 8px rgba(3,29,74,.02); transition: transform .4s cubic-bezier(.22,.72,.32,1), border-color .4s ease, box-shadow .4s ease; overflow: visible; isolation: isolate; }
 .plans__card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(180deg, rgba(8,123,255,.03) 0%, transparent 40%); opacity: 0; transition: opacity .4s ease; }
 .plans__grid--combo .plans__card::before { background: linear-gradient(180deg, rgba(255,212,0,.04) 0%, transparent 40%); }
 .plans__card:hover::before { opacity: 1; }
