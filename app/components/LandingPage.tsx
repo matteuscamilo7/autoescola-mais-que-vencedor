@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { comboPlans, formatBRL, individualPlans, type Plan } from "../data/plans";
 const brandLogo = "/images/brand-logo.webp";
 const heroVehicles = "/images/hero-vehicles-autoescola.webp";
@@ -138,6 +138,21 @@ export default function LandingPage() {
   const [help, setHelp] = useState(false);
   const [legal, setLegal] = useState<"privacy" | "terms" | null>(null);
   const [activeSection, setActiveSection] = useState("inicio");
+  const heroVisualRef = useRef<HTMLDivElement>(null);
+
+  const handleHeroPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - .5;
+    const y = (event.clientY - rect.top) / rect.height - .5;
+    event.currentTarget.style.setProperty("--pointer-x", `${x * 16}px`);
+    event.currentTarget.style.setProperty("--pointer-y", `${y * 12}px`);
+  };
+
+  const resetHeroPointer = () => {
+    heroVisualRef.current?.style.setProperty("--pointer-x", "0px");
+    heroVisualRef.current?.style.setProperty("--pointer-y", "0px");
+  };
 
   useEffect(() => {
     let frame = 0;
@@ -310,7 +325,7 @@ export default function LandingPage() {
                 <li><b>✓</b> Queimados – RJ</li>
               </ul>
             </div>
-            <div className="hero__visual">
+            <div className="hero__visual" ref={heroVisualRef} onPointerMove={handleHeroPointerMove} onPointerLeave={resetHeroPointer}>
               <div className="hero__stage" aria-hidden="true">
                 <div className="hero__road-orbit"><i /><i /><i /></div>
                 <div className="vehicle-glow" />
@@ -348,9 +363,9 @@ export default function LandingPage() {
 
         <div className="traffic-strip" aria-hidden="true">
           <div className="traffic-strip__road">
-            <span className="traffic-strip__vehicle traffic-strip__vehicle--car">🚗</span>
-            <span className="traffic-strip__vehicle traffic-strip__vehicle--moto">🏍️</span>
-            <span className="traffic-strip__vehicle traffic-strip__vehicle--bus">🚌</span>
+            <span className="traffic-strip__vehicle traffic-strip__vehicle--car"><i>🚗</i></span>
+            <span className="traffic-strip__vehicle traffic-strip__vehicle--moto"><i>🏍️</i></span>
+            <span className="traffic-strip__vehicle traffic-strip__vehicle--bus"><i>🚌</i></span>
           </div>
         </div>
 
