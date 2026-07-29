@@ -54,7 +54,7 @@ export default function PlansSection({
       <div className="container">
         <header className="section-title centered" data-reveal>
           <span>Planos transparentes</span>
-          <h2 id="plans-title"><span>Escolha o plano ideal para você</span></h2>
+          <h2 id="plans-title">Escolha o plano ideal para você</h2>
           <p>Selecione a categoria e veja as opções de aulas disponíveis.</p>
         </header>
 
