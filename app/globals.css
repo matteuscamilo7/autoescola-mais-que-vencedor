@@ -689,10 +689,12 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .section { padding: 75px 0; }
   .plans__tabs { grid-template-columns: 1fr; max-width: 340px; }
   .plans__toggle { flex-wrap: wrap; }
-  .plans__grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
-  .plans__card { display: grid; grid-template-columns: .65fr 1fr; align-items: end; gap: 3px 14px; }
-  .plans__card-head, .plans__card .plans__card-btn { grid-column: 1 / -1; }
-  .plans__card-lessons, .plans__card-price { margin: 12px 0; }
+  .plans__grid { grid-template-columns: 1fr; max-width: 380px; margin-inline: auto; }
+  .plans__card-head { padding: 16px 16px 14px; }
+  .plans__card-body { padding: 14px 16px 16px; }
+  .plans__card-icon { width: 42px; height: 42px; flex: 0 0 42px; font-size: 18px; }
+  .plans__card-number { font-size: 26px; }
+  .plans__card-price-value { font-size: 22px; }
   .plans__warning { align-items: flex-start; }
   .plans__summary-body { grid-template-columns: 1fr 1fr; gap: 18px 9px; }
   .plans__summary-btn { grid-column: 1 / -1; }
