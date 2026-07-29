@@ -146,9 +146,9 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .traffic-strip__road { width: 100%; height: 100%; position: relative; overflow: hidden; background: linear-gradient(180deg, #151922 0 46%, #292f3a 46% 54%, #10141c 54%); }
 .traffic-strip__road::before { content: ""; position: absolute; inset: 50% 0 auto; height: 3px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.92) 0 44px, transparent 44px 82px); transform: translateY(-50%); opacity: .72; }
 .traffic-strip__vehicle { position: absolute; left: 0; z-index: 2; display: grid; place-items: center; filter: drop-shadow(0 5px 5px rgba(0,0,0,.55)); transform-origin: center; animation-play-state: running; will-change: transform; }
-.traffic-strip__vehicle--car { bottom: 2px; font-size: 29px; animation: cruise-and-return 24s linear -5s infinite; }
-.traffic-strip__vehicle--moto { top: 0; font-size: 27px; animation: cruise-back-and-forth 20s linear -4s infinite; }
-.traffic-strip__vehicle--bus { top: -2px; font-size: 30px; animation: cruise-and-return 34s linear -17s infinite; }
+.traffic-strip__vehicle--car { bottom: 2px; font-size: 29px; animation: cruise-and-return 22s linear -5s infinite; }
+.traffic-strip__vehicle--moto { top: 0; font-size: 27px; animation: cruise-back-and-forth 24s linear -4s infinite; }
+.traffic-strip__vehicle--bus { top: -2px; font-size: 30px; animation: cruise-and-return 30s linear -17s infinite; }
 
 .trust { position: relative; overflow: hidden; isolation: isolate; padding: 34px 0 30px; background: #fff; border-bottom: 1px solid #e7edf4; }
 .trust::before { content: ""; position: absolute; z-index: -2; width: 500px; height: 150px; top: -102px; left: 50%; border: 1px solid rgba(8,123,255,.08); border-radius: 50%; box-shadow: 0 0 0 18px rgba(8,123,255,.012); transform: translateX(-50%) rotate(-5deg); }
