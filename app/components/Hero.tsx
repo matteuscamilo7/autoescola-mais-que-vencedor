@@ -33,11 +33,14 @@ export default function Hero() {
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
       <div className="hero__grid" aria-hidden="true" />
-      <div className="hero__ambient" aria-hidden="true">
-        <i className="hero__ambient-blue" />
-        <i className="hero__ambient-yellow" />
-        <i className="hero__ambient-beam" />
-      </div>
+          <div className="hero__ambient" aria-hidden="true">
+            <i className="hero__ambient-blue" />
+            <i className="hero__ambient-yellow" />
+            <i className="hero__ambient-beam" />
+            {Array.from({ length: 10 }).map((_, i) => (
+              <i key={i} className="hero__particle" />
+            ))}
+          </div>
       <div className="container hero__layout">
         <div className="hero__copy">
           <span className="eyebrow"><i /> Instrutores credenciados pelo DETRAN-RJ</span>
