@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Brand from "./Brand";
 import WaButton from "./WaButton";
 import { navigationItems } from "../data/content";
-import { useEffect } from "react";
 
 export default function Navbar({
   menu,
@@ -16,6 +16,9 @@ export default function Navbar({
   scrolled: boolean;
   activeSection: string;
 }) {
+  const lastScroll = useRef(0);
+  const hidden = useRef(false);
+
   useEffect(() => {
     if (!menu) return;
     const previousOverflow = document.body.style.overflow;
@@ -29,6 +32,35 @@ export default function Navbar({
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [menu, setMenu]);
+
+  useEffect(() => {
+    const el = document.querySelector(".header") as HTMLElement | null;
+    if (!el) return;
+    const threshold = 120;
+    let frame = 0;
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const y = window.scrollY;
+        if (y <= threshold) {
+          el.classList.remove("header--hidden");
+          hidden.current = false;
+        } else if (y > lastScroll.current && y > threshold) {
+          el.classList.add("header--hidden");
+          hidden.current = true;
+        } else if (y < lastScroll.current) {
+          el.classList.remove("header--hidden");
+          hidden.current = false;
+        }
+        lastScroll.current = y;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
