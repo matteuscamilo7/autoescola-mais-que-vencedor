@@ -121,7 +121,7 @@ export default function LandingPage() {
       <HelpBubble />
       <WhatsAppFloat />
       <MobileBar />
-      <CookieConsent />
+      <CookieConsent onPrivacy={() => setLegal("privacy")} />
       <LegalModal legal={legal} setLegal={setLegal} />
 
       <script
