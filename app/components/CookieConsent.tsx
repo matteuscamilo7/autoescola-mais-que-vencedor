@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function CookieConsent() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !localStorage.getItem("cookie-consent");
-  });
+export default function CookieConsent({ onPrivacy }: { onPrivacy: () => void }) {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setVisible(!localStorage.getItem("cookie-consent"));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   const accept = () => {
     localStorage.setItem("cookie-consent", "accepted");
@@ -25,7 +29,7 @@ export default function CookieConsent() {
     }}>
       <p style={{ margin: 0, maxWidth: 700, color: "#cbd5e1" }}>
         Este site utiliza cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa{" "}
-        <button onClick={() => {}} style={{ color: "#ffd400", background: "none", border: 0, padding: 0, cursor: "pointer", textDecoration: "underline" }}>
+        <button type="button" onClick={onPrivacy} style={{ color: "#ffd400", background: "none", border: 0, padding: 0, cursor: "pointer", textDecoration: "underline" }}>
           Política de Privacidade
         </button>.
       </p>

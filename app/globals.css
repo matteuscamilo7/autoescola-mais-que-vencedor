@@ -175,19 +175,22 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .hero__quote a:hover { color: #fff; }
 .hero__quote a:hover span { background: rgba(255,212,0,.09); transform: translateY(3px); }
 
-.traffic-strip { height: 78px; position: relative; z-index: 4; overflow: hidden; background: #080b10; border-block: 3px solid var(--yellow); box-shadow: 0 0 22px rgba(255,212,0,.16); }
+.traffic-strip { height: 88px; position: relative; z-index: 4; overflow: hidden; background: #080b10; border-block: 3px solid var(--yellow); box-shadow: 0 0 22px rgba(255,212,0,.16); }
 .traffic-strip::after { content: ""; position: absolute; z-index: 3; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(44,183,255,.12) 15%, rgba(255,212,0,.08) 30%, transparent 45%, transparent 55%, rgba(44,183,255,.1) 70%, rgba(255,212,0,.06) 85%, transparent 100%); background-size: 200% 100%; animation: traffic-glow-sweep 8s ease-in-out infinite; pointer-events: none; }
 .traffic-strip__road { width: 100%; height: 100%; position: relative; overflow: hidden; background: linear-gradient(180deg, #11151d 0 46%, #2b313c 46% 54%, #10141c 54%); }
 .traffic-strip__road::before { content: ""; position: absolute; inset: 50% 0 auto; height: 3px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.92) 0 44px, transparent 44px 82px); transform: translateY(-50%); opacity: .72; animation: road-line-pulse 3s ease-in-out infinite; }
 .traffic-strip__road::after { content: ""; position: absolute; inset: 4px 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(44,183,255,.6), transparent); opacity: .6; }
-.traffic-strip__vehicle { width: 46px; position: absolute; left: 0; z-index: 2; display: grid; place-items: center; filter: drop-shadow(0 6px 6px rgba(0,0,0,.6)); transform-origin: center; will-change: transform; }
+.traffic-strip__lane { position: absolute; z-index: 2; left: 0; width: 100%; height: 33.333%; overflow: hidden; container-type: inline-size; }
+.traffic-strip__lane--bus { top: 0; }.traffic-strip__lane--moto { top: 33.333%; }.traffic-strip__lane--car { bottom: 0; }
+.traffic-strip__flow { width: max-content; height: 100%; display: flex; will-change: transform; animation: traffic-flow 20s linear infinite; }
+.traffic-strip__flow--bus { animation-duration: 24s; animation-delay: -9s; }.traffic-strip__flow--moto { animation-duration: 18s; animation-delay: -4s; }.traffic-strip__flow--car { animation-duration: 21s; animation-delay: -14s; }
+.traffic-strip__flow-set { width: 100cqw; height: 100%; flex: 0 0 100cqw; display: flex; align-items: center; justify-content: space-around; }
+.traffic-strip__vehicle { width: 46px; flex: 0 0 46px; position: relative; display: grid; place-items: center; filter: drop-shadow(0 6px 6px rgba(0,0,0,.6)); }
 .traffic-strip__vehicle i { display: block; font-style: normal; filter: saturate(1.1); }
-.traffic-strip__vehicle i::after { content: ""; width: 30px; height: 2px; position: absolute; top: 50%; right: calc(100% + 5px); background: linear-gradient(90deg, transparent, rgba(44,183,255,.72)); box-shadow: 0 0 8px rgba(44,183,255,.55); transform: translateY(-50%); }
-.traffic-strip__vehicle--car { bottom: 2px; font-size: 30px; animation: traffic-forward 18s linear -4s infinite; }
+.traffic-strip__vehicle::after { content: ""; width: 26px; height: 2px; position: absolute; top: 50%; right: calc(100% + 3px); background: linear-gradient(90deg, transparent, rgba(44,183,255,.72)); box-shadow: 0 0 8px rgba(44,183,255,.55); transform: translateY(-50%); }
+.traffic-strip__vehicle--car, .traffic-strip__vehicle--bus { font-size: 27px; }.traffic-strip__vehicle--moto { font-size: 24px; }
 .traffic-strip__vehicle--car i, .traffic-strip__vehicle--bus i { transform: scaleX(-1); }
-.traffic-strip__vehicle--moto { top: 0; font-size: 28px; animation: traffic-reverse 21s linear -9s infinite; }
-.traffic-strip__vehicle--moto i::after { right: auto; left: calc(100% + 5px); transform: translateY(-50%) scaleX(-1); }
-.traffic-strip__vehicle--bus { top: -2px; font-size: 31px; animation: traffic-forward 25s linear -15s infinite; }
+.traffic-strip--paused .traffic-strip__flow { animation-play-state: paused; }
 
 .trust { position: relative; overflow: hidden; isolation: isolate; padding: 34px 0 30px; background: #fff; border-bottom: 1px solid #e7edf4; }
 .trust::before { content: ""; position: absolute; z-index: -2; width: 500px; height: 150px; top: -102px; left: 50%; border: 1px solid rgba(8,123,255,.08); border-radius: 50%; box-shadow: 0 0 0 18px rgba(8,123,255,.012); transform: translateX(-50%) rotate(-5deg); }
@@ -362,11 +365,12 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 
 .process { background: var(--soft); }
 .steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-.steps::before { content: ""; position: absolute; top: 29px; left: 11%; right: 11%; height: 3px; background: linear-gradient(90deg, var(--blue), var(--yellow)); box-shadow: 0 0 14px rgba(8,123,255,.25); }
-.steps::after { display: none; }
-.steps__vehicle { width: 54px; height: 32px; position: absolute; z-index: 4; top: 13px; left: calc(12.5% - 27px); display: block; animation: route-trip 11s cubic-bezier(.45,0,.25,1) infinite; will-change: left, transform, opacity; }
-.steps__vehicle svg { width: 100%; height: 100%; display: block; overflow: visible; filter: drop-shadow(0 7px 7px rgba(3,29,74,.24)); }
-.steps__vehicle::after { content: ""; width: 22px; height: 2px; position: absolute; z-index: -1; top: 58%; right: calc(100% + 5px); background: linear-gradient(90deg, transparent, rgba(8,123,255,.72)); border-radius: 999px; box-shadow: 0 0 8px rgba(8,123,255,.42); transform: translateY(-50%); }
+.steps__route { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.steps__route path { fill: none; stroke: url(#steps-route-gradient); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(8,123,255,.22)); }
+.steps__vehicle { position: absolute; z-index: 4; inset: 0; display: block; pointer-events: none; }
+.steps__vehicle-motion { width: 54px; height: 32px; position: absolute; top: 0; left: 0; display: block; will-change: transform; }
+.steps__vehicle-motion svg { width: 100%; height: 100%; display: block; overflow: visible; filter: drop-shadow(0 7px 7px rgba(3,29,74,.24)); }
+.steps__vehicle-motion::after { content: ""; width: 22px; height: 2px; position: absolute; z-index: -1; top: 58%; right: calc(100% + 5px); background: linear-gradient(90deg, transparent, rgba(8,123,255,.72)); border-radius: 999px; box-shadow: 0 0 8px rgba(8,123,255,.42); transform: translateY(-50%); }
 .steps article { position: relative; z-index: 1; padding: 0 6px; text-align: center; }
 .steps article > b { width: 58px; height: 58px; margin: 0 auto 20px; display: grid; place-items: center; color: #fff; background: var(--blue); border: 7px solid var(--soft); border-radius: 50%; box-shadow: 0 0 0 1px #bfd5ee; animation: step-pulse 4s ease-in-out infinite; }
 .steps article:nth-child(2) > b { animation-delay: -1s; }
@@ -516,26 +520,7 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   98% { transform: translate3d(calc(100vw + 30px),0,0) scaleX(-1); }
   100% { transform: translate3d(calc(100vw + 30px),0,0) scaleX(1); }
 }
-@keyframes traffic-forward {
-  from { transform: translate3d(-120px,0,0); }
-  to { transform: translate3d(calc(100vw + 120px),0,0); }
-}
-@keyframes traffic-reverse {
-  from { transform: translate3d(calc(100vw + 120px),0,0); }
-  to { transform: translate3d(-120px,0,0); }
-}
-@keyframes route-trip {
-  0%, 8% { left: calc(12.5% - 27px); opacity: 1; transform: translateY(0) rotate(0deg); }
-  18% { left: calc(37.5% - 27px); transform: translateY(-7px) rotate(-3deg); }
-  25% { left: calc(37.5% - 27px); transform: translateY(0) rotate(0deg); }
-  40% { left: calc(62.5% - 27px); transform: translateY(-7px) rotate(-3deg); }
-  48% { left: calc(62.5% - 27px); transform: translateY(0) rotate(0deg); }
-  64% { left: calc(87.5% - 27px); transform: translateY(-7px) rotate(-3deg); }
-  74% { left: calc(87.5% - 27px); opacity: 1; transform: translateY(0) rotate(0deg); }
-  76% { left: calc(87.5% - 27px); opacity: 0; }
-  77% { left: calc(12.5% - 27px); opacity: 0; }
-  84%, 100% { left: calc(12.5% - 27px); opacity: 1; transform: translateY(0) rotate(0deg); }
-}
+@keyframes traffic-flow { from { transform: translate3d(-50%,0,0); } to { transform: translate3d(0,0,0); } }
 @keyframes vehicle-idle { 0%,100% { transform: translateX(0) rotate(0); } 45% { transform: translateX(5px) rotate(-2deg); } 60% { transform: translateX(5px) rotate(1deg); } }
 @keyframes hero-gradient-morph { 0% { opacity: 0; } 50% { opacity: .6; } 100% { opacity: 0; } }
 @keyframes hero-ring-pulse { 0%,100% { opacity: .5; transform: rotate(-8deg) scale(1); box-shadow: 0 0 0 28px rgba(255,255,255,.025), 0 0 0 58px rgba(8,123,255,.025), 0 0 80px rgba(8,123,255,.12); } 50% { opacity: 1; transform: rotate(-6deg) scale(1.04); box-shadow: 0 0 0 38px rgba(255,255,255,.05), 0 0 0 72px rgba(8,123,255,.05), 0 0 120px rgba(8,123,255,.22); } }
@@ -617,7 +602,7 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .feature-grid { grid-template-columns: 1fr; }
   .feature-grid article { min-height: 285px; }
   .feature-grid article > img { width: 210px; height: 210px; right: 10px; }
-  .steps { grid-template-columns: 1fr 1fr; gap: 35px; } .steps::before, .steps::after, .steps__vehicle { display: none; }
+  .steps { grid-template-columns: 1fr 1fr; gap: 35px; }
   .about__layout, .location__layout, .faq__layout { grid-template-columns: 1fr; gap: 45px; }
   .about__visual { min-height: 360px; }
   .final-cta__layout { grid-template-columns: 1fr; gap: 35px; text-align: center; }
@@ -662,10 +647,9 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .hero__quote-icon { width: 38px; height: 38px; flex-basis: 38px; border-radius: 11px; }
   .hero__quote p { max-width: 270px; font-size: 11px; line-height: 1.5; }
   .hero__quote a { display: none; }
-  .traffic-strip { height: 64px; }
-  .traffic-strip__vehicle--car { font-size: 24px; }
-  .traffic-strip__vehicle--moto { font-size: 23px; }
-  .traffic-strip__vehicle--bus { font-size: 25px; }
+  .traffic-strip { height: 76px; }
+  .traffic-strip__vehicle--car, .traffic-strip__vehicle--bus { font-size: 24px; }
+  .traffic-strip__vehicle--moto { font-size: 22px; }
   .trust { padding: 30px 0 34px; background: #fff; }
   .trust::before { width: 470px; height: 170px; top: -95px; }
   .trust::after { top: 35%; }
@@ -733,9 +717,8 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .eyebrow, .hero h1 > span, .hero__lead, .hero__detail, .hero__actions, .hero__facts, .hero__visual { opacity: 1; transform: none; animation: none !important; }
   .hero__headline-highlight::after { transform: skewX(-13deg) scaleX(1); animation: none !important; }
-  .hero__vehicles, .hero__microbus, .hero__ambient i, .vehicle-glow, .hero__stage-shadow, .route, .route b, .route > i, .hero__check-3d, .steps__vehicle, .plans__card-badge { animation: none !important; }
+  .hero__vehicles, .hero__microbus, .hero__ambient i, .vehicle-glow, .hero__stage-shadow, .route, .route b, .route > i, .hero__check-3d, .plans__card-badge { animation: none !important; }
   .reveal-ready [data-reveal], [data-reveal] { opacity: 1 !important; translate: 0 !important; transform: none !important; transition: none !important; }
   .benefit-card:hover, .benefit-card:hover .benefit-card__visual::before, .benefit-card:hover .benefit-card__visual img, .benefit-card:hover .benefit-card__visual i, .benefit-card:hover .benefit-card__check { transform: none; }
-  .traffic-strip__vehicle--car, .traffic-strip__vehicle--moto, .traffic-strip__vehicle--bus { left: 0; animation: none !important; transform: none !important; }
-  .steps__vehicle { left: calc(12.5% - 27px) !important; opacity: 1 !important; }
+  .traffic-strip__flow { animation: none !important; transform: none !important; }
 }
