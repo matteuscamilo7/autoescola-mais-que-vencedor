@@ -247,8 +247,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .section-title { max-width: 690px; }
 .section-title.centered { margin: 0 auto clamp(28px, 3vw, 40px); text-align: center; }
 .section-title > span, .kicker { color: var(--blue); font-size: 11px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 0 18px rgba(8,123,255,.18); }
-.section-title h2 { margin: 9px 0 12px; color: var(--navy); font: 800 clamp(31px, 3.7vw, 48px)/1.09 var(--font-manrope), sans-serif; letter-spacing: -.052em; text-wrap: balance; background: linear-gradient(135deg, #0a1b34 0%, #087bff 45%, #2cb7ff 70%, #0a1b34 100%); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: title-gradient 6s ease-in-out infinite; display: inline; }
-.section-title.centered h2 { display: inline-block; }
+.section-title h2 { margin: 9px 0 12px; color: var(--navy); font: 800 clamp(31px, 3.7vw, 48px)/1.09 var(--font-manrope), sans-serif; letter-spacing: -.052em; text-wrap: balance; background: linear-gradient(135deg, #0a1b34 0%, #087bff 45%, #2cb7ff 70%, #0a1b34 100%); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: title-gradient 6s ease-in-out infinite; display: block; }
 .section-title p { max-width: 58ch; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
 .section-title.centered p { margin-inline: auto; }
 .plans { position: relative; isolation: isolate; padding: clamp(60px, 8vw, 100px) 0 0; }
