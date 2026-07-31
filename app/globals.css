@@ -719,5 +719,10 @@ footer { padding: 70px 0 25px; color: #fff; background: #030405; }
   .hero__vehicles, .hero__microbus, .hero__ambient i, .vehicle-glow, .hero__stage-shadow, .route, .route b, .route > i, .hero__check-3d, .plans__card-badge { animation: none !important; }
   .reveal-ready [data-reveal], [data-reveal] { opacity: 1 !important; translate: 0 !important; transform: none !important; transition: none !important; }
   .benefit-card:hover, .benefit-card:hover .benefit-card__visual::before, .benefit-card:hover .benefit-card__visual img, .benefit-card:hover .benefit-card__visual i, .benefit-card:hover .benefit-card__check { transform: none; }
-  .traffic-strip__flow { animation: none !important; transform: none !important; }
+  /* A faixa de trânsito continua em movimento mesmo quando o navegador reduz
+     as demais animações: ela é um elemento funcional da comunicação visual. */
+  .traffic-strip__flow { animation-name: traffic-flow !important; animation-timing-function: linear !important; animation-iteration-count: infinite !important; animation-play-state: running !important; }
+  .traffic-strip__flow--bus { animation-duration: 24s !important; animation-delay: -9s !important; }
+  .traffic-strip__flow--moto { animation-duration: 18s !important; animation-delay: -4s !important; }
+  .traffic-strip__flow--car { animation-duration: 21s !important; animation-delay: -14s !important; }
 }
