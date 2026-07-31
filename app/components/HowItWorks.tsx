@@ -182,14 +182,12 @@ export default function HowItWorks() {
     const stops = route.points.map((point) => nearestPathLength(routePath, point, totalLength));
     const transformAt = (index: number) => vehicleTransform(routePath.getPointAtLength(stops[index]), route.vertical);
     const progressAt = (index: number) => Math.max(0, totalLength - stops[index]);
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     vehicle.style.transform = transformAt(0);
     vehicle.style.opacity = "1";
     activePath.style.strokeDasharray = `${totalLength}`;
     activePath.style.strokeDashoffset = `${totalLength}`;
 
-    if (reducedMotion) return;
+    // O deslocamento é parte da explicação visual da jornada e permanece ativo.
 
     const carAnimation = vehicle.animate([
       { transform: transformAt(0), opacity: 1, offset: 0 },
