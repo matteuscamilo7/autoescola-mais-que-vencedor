@@ -189,7 +189,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .traffic-strip__vehicle i { display: block; font-style: normal; filter: saturate(1.1); }
 .traffic-strip__vehicle::after { content: ""; width: 26px; height: 2px; position: absolute; top: 50%; right: calc(100% + 3px); background: linear-gradient(90deg, transparent, rgba(44,183,255,.72)); box-shadow: 0 0 8px rgba(44,183,255,.55); transform: translateY(-50%); }
 .traffic-strip__vehicle--car, .traffic-strip__vehicle--bus { font-size: 27px; }.traffic-strip__vehicle--moto { font-size: 24px; }
-.traffic-strip__vehicle--car i, .traffic-strip__vehicle--bus i { transform: scaleX(-1); }
+.traffic-strip__vehicle--car i, .traffic-strip__vehicle--moto i, .traffic-strip__vehicle--bus i { transform: scaleX(-1); }
 .traffic-strip--paused .traffic-strip__flow { animation-play-state: paused; }
 
 .trust { position: relative; overflow: hidden; isolation: isolate; padding: 34px 0 30px; background: #fff; border-bottom: 1px solid #e7edf4; }
