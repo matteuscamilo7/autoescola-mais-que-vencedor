@@ -263,7 +263,7 @@ export default function HowItWorks() {
         <header className="section-title centered" data-reveal>
           <span>Rota simples</span>
           <h2 id="process-title">Como funciona</h2>
-          <p>Da escolha do plano ao inÃ­cio da sua preparaÃ§Ã£o.</p>
+          <p>Da escolha do plano ao início da sua preparação.</p>
         </header>
         <div className="steps" ref={stepsRef}>
           {route && (
